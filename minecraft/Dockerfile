@@ -12,7 +12,6 @@ WORKDIR /home/minecraft
 # Paper Jar
 RUN wget https://api.papermc.io/v2/projects/paper/versions/1.19.2/builds/259/downloads/paper-1.19.2-259.jar
 
-
 # Download Mojang Jar and Generate EULA
 RUN java -jar paper-1.19.2-259.jar nogui
 
