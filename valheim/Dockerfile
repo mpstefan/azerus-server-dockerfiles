@@ -1,20 +1,18 @@
-FROM ubuntu:20.04
-
 RUN export DEBIAN_FRONTEND=noninteractive \
-	&& groupadd -g 1000 valheim \
-	&& useradd -m -d /home/valheim -u 1000 -g 1000 valheim \
-	&& apt-get update \
-	&& apt-get install -y lib32stdc++6 lib32gcc1 wget tar tzdata libsdl2-dev wine64 xvfb nano \
-	&& apt-get clean
+        && groupadd -g 1000 valheim \
+        && useradd -m -d /home/valheim -u 1000 -g 1000 valheim \
+        && apt-get update \
+        && apt-get install -y lib32stdc++6 lib32gcc1 wget tar tzdata libsdl2-dev nano libpulse-dev libatomic1 libc6 \
+        && apt-get clean
 
 USER valheim
 
 # Install SteamCMD
 RUN mkdir -vp /tmp/steamcmd \
-	&& cd /tmp/steamcmd \
-	&& wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
-	&& tar -xvzf steamcmd_linux.tar.gz \
-	&& rm steamcmd_linux.tar.gz
+        && cd /tmp/steamcmd \
+        && wget https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz \
+        && tar -xvzf steamcmd_linux.tar.gz \
+        && rm steamcmd_linux.tar.gz
 
 # Install Valheim
 WORKDIR /tmp/steamcmd
@@ -30,6 +28,11 @@ USER valheim
 WORKDIR /home/valheim
 
 EXPOSE 2456/udp
+EXPOSE 2456/tcp
 EXPOSE 2457/udp
+EXPOSE 2457/tcp
 
-CMD eval xvfb-run -a wine valheim_server.exe -nographics -batchmode -name "Azerus" -port 2456 -world "Dedicated" -password "V@lh3imP@$$w0rd" -crossplay
+COPY --chown=1000:1000 start_azerus_valheim.sh /home/valheim/start_azerus_valheim.sh
+RUN chmod +x ./start_azerus_valheim.sh
+
+CMD ./start_azerus_valheim.sh
