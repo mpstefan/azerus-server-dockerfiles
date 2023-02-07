@@ -1,3 +1,5 @@
+FROM ubuntu:20.04
+
 RUN export DEBIAN_FRONTEND=noninteractive \
         && groupadd -g 1000 valheim \
         && useradd -m -d /home/valheim -u 1000 -g 1000 valheim \
