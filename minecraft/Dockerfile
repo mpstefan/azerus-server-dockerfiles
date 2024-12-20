@@ -1,4 +1,4 @@
-FROM eclipse-temurin:19-jdk-alpine
+FROM eclipse-temurin:23-jdk-alpine
 
 RUN apk update \
 	&& addgroup -g 1000 minecraft \
