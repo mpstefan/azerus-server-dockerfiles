@@ -16,7 +16,7 @@ RUN wget https://api.papermc.io/v2/projects/paper/versions/1.21.3/builds/81/down
 RUN java -jar paper-1.21.3-81.jar nogui
 
 # Accept EULA
-# RUN sed -i 's/false/true/g' eula.txt
+RUN sed -i 's/false/true/g' eula.txt
 
 # Minecraft Port
 EXPOSE 25565/tcp
